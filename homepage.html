@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>The Scriptorium – A Word for Every Heart</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=UnifrakturCook:wght@700&family=IM+Fell+English:ital@0;1&display=swap" rel="stylesheet">
+<style>
+:root{
+  --vellum:#ead9b0; --vellum-2:#dcc693; --ink:#2b1d12; --blood:#6e1a1a; --lapis:#1f3a6b; --gilt:#9a7420; --edge:#5a3d1c;
+  --shadow:rgba(60,35,10,.35);
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --vellum:#241a12; --vellum-2:#1a120b; --ink:#ecdcb6; --blood:#d06a5a; --lapis:#8fb0e8; --gilt:#d4a94a; --edge:#8a6a3a; --shadow:rgba(0,0,0,.6);
+  }
+}
+:root[data-theme="dark"]{
+  --vellum:#241a12; --vellum-2:#1a120b; --ink:#ecdcb6; --blood:#d06a5a; --lapis:#8fb0e8; --gilt:#d4a94a; --edge:#8a6a3a; --shadow:rgba(0,0,0,.6);
+}
+*,*::before,*::after{box-sizing:inherit}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{
+  margin:0; color:var(--ink); font-family:"IM Fell English","Palatino Linotype",Palatino,Georgia,serif;
+  font-size:1.15rem; line-height:1.7;
+  background:
+    radial-gradient(ellipse at 50% 0%, var(--vellum) 0%, var(--vellum-2) 100%) fixed;
+  min-height:100vh;
+}
+.page{max-width:44rem; margin:0 auto; padding:1.5rem 1.25rem 3rem}
+.frame{
+  border:3px double var(--edge); outline:1px solid var(--gilt); outline-offset:6px;
+  padding:2rem 1.5rem 2.25rem; background:rgba(255,248,225,.08);
+  box-shadow:0 10px 30px var(--shadow);
+  margin:.5rem 0;
+}
+header{text-align:center}
+.cross{font-family:"UnifrakturCook",serif; color:var(--blood); font-size:2.4rem; line-height:1; margin:0}
+h1{
+  font-family:"UnifrakturCook","Old English Text MT",Georgia,serif; font-weight:700;
+  font-size:clamp(2.6rem,10vw,4.4rem); line-height:1.05; margin:.25rem 0 .5rem; color:var(--blood);
+  text-shadow:1px 1px 0 var(--gilt);
+}
+.tag{font-style:italic; margin:0 auto; max-width:30rem}
+.rule{
+  display:flex; align-items:center; gap:.8rem; margin:1.5rem 0; color:var(--gilt); font-size:1.3rem;
+}
+.rule::before,.rule::after{content:""; flex:1; height:0; border-top:1px solid var(--gilt); border-bottom:1px solid var(--gilt); padding-top:2px}
+h2{font-family:"UnifrakturCook",Georgia,serif; font-size:1.7rem; color:var(--lapis); text-align:center; margin:0 0 .25rem}
+.sub{text-align:center; margin:0 0 1.25rem; font-style:italic}
+.seals{display:grid; grid-template-columns:repeat(auto-fit,minmax(8.5rem,1fr)); gap:.75rem}
+.seal{
+  font:inherit; color:#f6e8c8; cursor:pointer; text-align:center;
+  background:radial-gradient(circle at 35% 30%, #a02a2a, var(--blood) 70%);
+  background-color:#6e1a1a;
+  border:2px solid #3d0d0d; border-radius:2.2rem 2.4rem 2.1rem 2.5rem / 2.4rem 2.1rem 2.5rem 2.2rem;
+  padding:.65rem .5rem; box-shadow:0 3px 0 #3d0d0d, 0 6px 10px var(--shadow);
+  transition:transform .12s, box-shadow .12s;
+}
+.seal:hover{transform:translateY(1px); box-shadow:0 2px 0 #3d0d0d, 0 4px 8px var(--shadow)}
+.seal:active,.seal[aria-pressed="true"]{transform:translateY(3px); box-shadow:0 0 0 #3d0d0d, inset 0 2px 6px rgba(0,0,0,.5)}
+.seal[aria-pressed="true"]{background-color:#4c1010; outline:2px solid var(--gilt); outline-offset:2px}
+.seal:focus-visible,.go:focus-visible,input:focus-visible,.again:focus-visible{outline:3px solid var(--lapis); outline-offset:3px}
+.or{text-align:center; margin:1.25rem 0 .5rem; font-style:italic}
+.say{display:flex; gap:.5rem; flex-wrap:wrap}
+input{
+  flex:1 1 14rem; font:inherit; color:var(--ink); background:rgba(255,250,235,.35);
+  border:0; border-bottom:2px solid var(--edge); padding:.5rem .6rem; border-radius:0;
+}
+input::placeholder{color:var(--ink); opacity:.55; font-style:italic}
+.go,.again{
+  font:inherit; cursor:pointer; color:var(--ink); background:transparent;
+  border:2px solid var(--gilt); padding:.45rem 1.1rem; border-radius:.2rem;
+  box-shadow:inset 0 0 0 2px var(--vellum), inset 0 0 0 3px var(--edge);
+}
+.go:hover,.again:hover{background:rgba(154,116,32,.18)}
+#verse{margin-top:1.75rem}
+.scroll{
+  position:relative; padding:1.75rem 1.5rem 1.5rem; background:rgba(255,248,225,.18);
+  border:2px solid var(--edge); border-left:10px solid var(--lapis);
+  animation:unfurl .5s ease-out both;
+}
+@keyframes unfurl{from{opacity:0; transform:translateY(-8px) scaleY(.96)} to{opacity:1; transform:none}}
+@media (prefers-reduced-motion: reduce){.scroll{animation:none} .seal{transition:none}}
+.feel{margin:0 0 .75rem; font-style:italic; color:var(--lapis)}
+.text{margin:0; font-size:1.3rem; line-height:1.75}
+.text::first-letter{
+  font-family:"UnifrakturCook",serif; float:left; font-size:4.6rem; line-height:.8; padding:.35rem .5rem 0 0; color:var(--blood);
+  text-shadow:1px 1px 0 var(--gilt);
+}
+.ref{margin:1rem 0 0; text-align:right; font-style:italic; color:var(--blood); font-size:1.15rem}
+.ref::before{content:"\2014\00a0"}
+.actions{margin-top:1rem; text-align:right}
+.hidden{display:none}
+.note{margin:0; text-align:center; font-size:.95rem; font-style:italic; opacity:.85}
+footer{margin-top:2rem}
+.theme{display:block; margin:1.25rem auto 0; font:inherit; font-size:.9rem; background:none; border:0; color:var(--ink); text-decoration:underline; cursor:pointer; opacity:.8}
+@media (max-width:30rem){.frame{padding:1.5rem 1rem 1.75rem}.text{font-size:1.2rem}}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="frame">
+    <header>
+      <p class="cross" aria-hidden="true">✠</p>
+      <h1>The Scriptorium</h1>
+      <p class="tag">Tell the scribe how thy heart doth fare, and receive a verse from Holy Scripture to keep thee company.</p>
+    </header>
+
+    <div class="rule" aria-hidden="true">❦</div>
+
+    <main>
+      <h2>How fareth thy heart today?</h2>
+      <p class="sub">Press a seal to choose thy mood.</p>
+
+      <div class="seals" id="seals" role="group" aria-label="Choose a mood"></div>
+
+      <p class="or">or write it in thine own words</p>
+      <div class="say">
+        <input id="free" type="text" placeholder="I feel overwhelmed and tired…" aria-label="Describe how you feel" autocomplete="off">
+        <button class="go" id="go" type="button">Seek a verse</button>
+      </div>
+
+      <section id="verse" aria-live="polite"></section>
+    </main>
+
+    <div class="rule" aria-hidden="true">❦</div>
+    <footer>
+      <p class="note">Verses are drawn from the King James Version. Read the whole passage in thine own Bible for its full meaning.</p>
+      <button class="theme" id="theme" type="button">Switch to candlelight / daylight</button>
+    </footer>
+  </div>
+</div>
+
+<script>
+const MOODS = {
+  anxious:{label:"Anxious", words:["anxious","anxiety","worried","worry","nervous","stress","stressed","overwhelmed","panic","uneasy"], v:[
+    ["Be careful for nothing; but in every thing by prayer and supplication with thanksgiving let your requests be made known unto God.","Philippians 4:6"],
+    ["Casting all your care upon him; for he careth for you.","1 Peter 5:7"],
+    ["Take therefore no thought for the morrow: for the morrow shall take thought for the things of itself. Sufficient unto the day is the evil thereof.","Matthew 6:34"]]},
+  sad:{label:"Sorrowful", words:["sad","sorrow","grief","grieving","cry","crying","depressed","down","hurt","heartbroken","loss","mourning"], v:[
+    ["The LORD is nigh unto them that are of a broken heart; and saveth such as be of a contrite spirit.","Psalm 34:18"],
+    ["For his anger endureth but a moment; in his favour is life: weeping may endure for a night, but joy cometh in the morning.","Psalm 30:5"],
+    ["Blessed are they that mourn: for they shall be comforted.","Matthew 5:4"]]},
+  joyful:{label:"Joyful", words:["happy","joy","joyful","glad","excited","great","good","cheerful","blessed","wonderful"], v:[
+    ["This is the day which the LORD hath made; we will rejoice and be glad in it.","Psalm 118:24"],
+    ["Rejoice in the Lord alway: and again I say, Rejoice.","Philippians 4:4"],
+    ["Neither be ye sorry; for the joy of the LORD is your strength.","Nehemiah 8:10"]]},
+  angry:{label:"Wrathful", words:["angry","anger","mad","furious","rage","annoyed","frustrated","bitter","resentful","irritated"], v:[
+    ["Be ye angry, and sin not: let not the sun go down upon your wrath.","Ephesians 4:26"],
+    ["A soft answer turneth away wrath: but grievous words stir up anger.","Proverbs 15:1"],
+    ["Wherefore, my beloved brethren, let every man be swift to hear, slow to speak, slow to wrath.","James 1:19"]]},
+  lonely:{label:"Lonely", words:["lonely","alone","isolated","abandoned","forgotten","rejected","unloved","left out"], v:[
+    ["And the LORD, he it is that doth go before thee; he will be with thee, he will not fail thee, neither forsake thee: fear not, neither be dismayed.","Deuteronomy 31:8"],
+    ["God setteth the solitary in families.","Psalm 68:6"],
+    ["And, lo, I am with you alway, even unto the end of the world.","Matthew 28:20"]]},
+  afraid:{label:"Fearful", words:["afraid","fear","scared","frightened","terrified","dread","fearful","unsafe"], v:[
+    ["Fear thou not; for I am with thee: be not dismayed; for I am thy God: I will strengthen thee; yea, I will help thee.","Isaiah 41:10"],
+    ["Yea, though I walk through the valley of the shadow of death, I will fear no evil: for thou art with me.","Psalm 23:4"],
+    ["For God hath not given us the spirit of fear; but of power, and of love, and of a sound mind.","2 Timothy 1:7"]]},
+  weary:{label:"Weary", words:["tired","weary","exhausted","burnt","burned","drained","fatigued","sleepy","worn"], v:[
+    ["Come unto me, all ye that labour and are heavy laden, and I will give you rest.","Matthew 11:28"],
+    ["But they that wait upon the LORD shall renew their strength; they shall mount up with wings as eagles; they shall run, and not be weary.","Isaiah 40:31"],
+    ["And let us not be weary in well doing: for in due season we shall reap, if we faint not.","Galatians 6:9"]]},
+  hopeful:{label:"Hopeful", words:["hope","hopeful","hoping","optimistic","expectant","waiting","looking forward","uncertain","lost"], v:[
+    ["For I know the thoughts that I think toward you, saith the LORD, thoughts of peace, and not of evil, to give you an expected end.","Jeremiah 29:11"],
+    ["Now the God of hope fill you with all joy and peace in believing, that ye may abound in hope.","Romans 15:13"],
+    ["Be of good courage, and he shall strengthen your heart, all ye that hope in the LORD.","Psalm 31:24"]]},
+  grateful:{label:"Thankful", words:["grateful","thankful","thanks","appreciate","appreciative","blessed","gratitude"], v:[
+    ["In every thing give thanks: for this is the will of God in Christ Jesus concerning you.","1 Thessalonians 5:18"],
+    ["O give thanks unto the LORD, for he is good: for his mercy endureth for ever.","Psalm 107:1"],
+    ["Enter into his gates with thanksgiving, and into his courts with praise: be thankful unto him, and bless his name.","Psalm 100:4"]]},
+  guilty:{label:"Repentant", words:["guilty","guilt","ashamed","shame","sorry","regret","sinned","sin","repent","failed"], v:[
+    ["If we confess our sins, he is faithful and just to forgive us our sins, and to cleanse us from all unrighteousness.","1 John 1:9"],
+    ["As far as the east is from the west, so far hath he removed our transgressions from us.","Psalm 103:12"],
+    ["There is therefore now no condemnation to them which are in Christ Jesus.","Romans 8:1"]]}
+};
+const LEAD = {
+  anxious:"For the troubled mind",sad:"For the sorrowing heart",joyful:"For the glad of heart",angry:"For the burning spirit",
+  lonely:"For the heart that is alone",afraid:"For the fearful soul",weary:"For the weary traveller",
+  hopeful:"For the heart that waiteth",grateful:"For the thankful heart",guilty:"For the burdened conscience"
+};
+const seals = document.getElementById("seals"), out = document.getElementById("verse"),
+      free = document.getElementById("free"), last = {};
+let current = null;
+
+Object.entries(MOODS).forEach(([key, m]) => {
+  const b = document.createElement("button");
+  b.type = "button"; b.className = "seal"; b.textContent = m.label; b.dataset.key = key;
+  b.setAttribute("aria-pressed","false");
+  b.addEventListener("click", () => show(key));
+  seals.appendChild(b);
+});
+
+function pick(key){
+  const list = MOODS[key].v; let i;
+  do { i = Math.floor(Math.random()*list.length); } while (list.length > 1 && i === last[key]);
+  last[key] = i; return list[i];
+}
+function show(key, fromText){
+  current = key;
+  document.querySelectorAll(".seal").forEach(s => s.setAttribute("aria-pressed", String(s.dataset.key === key)));
+  const [text, ref] = pick(key);
+  out.innerHTML = "";
+  const box = document.createElement("div"); box.className = "scroll";
+  const f = document.createElement("p"); f.className = "feel"; f.textContent = LEAD[key] + ":";
+  const t = document.createElement("p"); t.className = "text"; t.textContent = text;
+  const r = document.createElement("p"); r.className = "ref"; r.textContent = ref;
+  const a = document.createElement("div"); a.className = "actions";
+  const again = document.createElement("button"); again.type = "button"; again.className = "again"; again.textContent = "Another verse";
+  again.addEventListener("click", () => show(key));
+  a.appendChild(again);
+  box.append(f, t, r, a); out.appendChild(box);
+  box.scrollIntoView({behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth", block:"nearest"});
+}
+function seek(){
+  const q = free.value.toLowerCase().trim();
+  if (!q) { free.focus(); return; }
+  let best = null, score = 0;
+  for (const [key, m] of Object.entries(MOODS)) {
+    const s = m.words.reduce((n, w) => n + (q.includes(w) ? 1 : 0), 0);
+    if (s > score) { score = s; best = key; }
+  }
+  if (!best) {
+    const keys = Object.keys(MOODS); best = keys[Math.floor(Math.random()*keys.length)];
+  }
+  show(best, true);
+}
+document.getElementById("go").addEventListener("click", seek);
+free.addEventListener("keydown", e => { if (e.key === "Enter") seek(); });
+
+document.getElementById("theme").addEventListener("click", () => {
+  const root = document.documentElement;
+  const dark = root.dataset.theme ? root.dataset.theme === "dark" : matchMedia("(prefers-color-scheme: dark)").matches;
+  root.dataset.theme = dark ? "light" : "dark";
+});
+</script>
+</body>
+</html>
